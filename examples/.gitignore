@@ -1,4 +1,6 @@
 c_simple_example
+c_simple_example_checker
+c_simple_example_single_thread
 column_families_example
 compact_files_example
 compaction_filter_example

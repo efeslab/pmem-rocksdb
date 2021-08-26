@@ -17,7 +17,10 @@ EXEC_LDFLAGS += $(LDFLAGS)
 
 .PHONY: clean librocksdb
 
-all: simple_example column_families_example compact_files_example c_simple_example optimistic_transaction_example transaction_example compaction_filter_example options_file_example
+all: simple_example column_families_example compact_files_example \
+	c_simple_example c_simple_example_single_thread c_simple_example_checker \
+	optimistic_transaction_example transaction_example \
+	compaction_filter_example options_file_example
 
 simple_example: librocksdb simple_example.cc
 	$(CXX) $(CXXFLAGS) $@.cc -o$@ ../librocksdb.a -I../include -O2 -std=c++11 $(PLATFORM_LDFLAGS) $(PLATFORM_CXXFLAGS) $(EXEC_LDFLAGS)
@@ -37,6 +40,12 @@ compact_files_example: librocksdb compact_files_example.cc
 c_simple_example: librocksdb c_simple_example.o
 	$(CXX) $@.o -o$@ ../librocksdb.a $(PLATFORM_LDFLAGS) $(EXEC_LDFLAGS)
 
+c_simple_example_checker: librocksdb c_simple_example_checker.o
+	$(CXX) $@.o -o$@ ../librocksdb.a $(PLATFORM_LDFLAGS) $(EXEC_LDFLAGS)
+
+c_simple_example_single_thread: librocksdb c_simple_example_single_thread.o
+	$(CXX) $@.o -o$@ ../librocksdb.a $(PLATFORM_LDFLAGS) $(EXEC_LDFLAGS)
+
 optimistic_transaction_example: librocksdb optimistic_transaction_example.cc
 	$(CXX) $(CXXFLAGS) $@.cc -o$@ ../librocksdb.a -I../include -O2 -std=c++11 $(PLATFORM_LDFLAGS) $(PLATFORM_CXXFLAGS) $(EXEC_LDFLAGS)
 
@@ -50,7 +59,11 @@ multi_processes_example: librocksdb multi_processes_example.cc
 	$(CXX) $(CXXFLAGS) $@.cc -o$@ ../librocksdb.a -I../include -O2 -std=c++11 $(PLATFORM_LDFLAGS) $(PLATFORM_CXXFLAGS) $(EXEC_LDFLAGS)
 
 clean:
-	rm -rf ./simple_example ./column_families_example ./compact_files_example ./compaction_filter_example ./c_simple_example c_simple_example.o ./optimistic_transaction_example ./transaction_example ./options_file_example ./multi_processes_example
+	rm -rf ./simple_example ./column_families_example ./compact_files_example \
+		./compaction_filter_example ./c_simple_example c_simple_example.o \
+		./optimistic_transaction_example ./transaction_example \
+		./options_file_example ./multi_processes_example \
+		.*.bc a.out
 
 librocksdb:
 	cd .. && $(MAKE) static_lib
