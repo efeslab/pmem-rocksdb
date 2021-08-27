@@ -980,7 +980,7 @@ J ?= 100%
 # Use this regexp to select the subset of tests whose names match.
 tests-regexp = .
 
-ifeq ($(PRINT_PARALLEL_OUTPUTS), 1)	
+ifeq ($(PRINT_PARALLEL_OUTPUTS), 1)
 	parallel_com = '{}'
 else
 	parallel_com = '{} >& t/log-{/}'
@@ -1061,7 +1061,7 @@ ifndef ASSERT_STATUS_CHECKED # not yet working with these tests
 	sh tools/rocksdb_dump_test.sh
 endif
 endif
-endif	
+endif
 ifndef SKIP_FORMAT_BUCK_CHECKS
 	$(MAKE) check-format
 	$(MAKE) check-buck-targets
